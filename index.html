@@ -1,179 +1,379 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sw">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nabogaming 2.5</title>
+  <title>NaboGaming 2.7</title>
   <link rel="icon" href="logo.png" type="image/x-icon">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
-  <link rel="stylesheet" href="remixicon.min.css">
-  <!-- Tailwind CSS (CDN for quick usage) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css">
   <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
-    /* Minimal custom styles preserved; prefer Tailwind utility classes for layout */
-    :root { --brand: #3aafa9; }
-  .btn-custom { background: #fff; color:#000; font-weight:600; border-radius: 0.75rem; display:inline-flex; align-items:center; padding: 0.75rem 1.5rem; }
-    .feature-box { background: #1f1f1f; }
-    /* keep a small max width to match previous layout */
-    body { max-width: 700px; margin: 0 auto; }
+    :root{
+      --brand: #3aafa9;
+      --muted: #9aa6b2;
+      --card: #0b1220;
+      --page-bg: #05060a;
+      --text: #e6eef4;
+      --glass: rgba(255,255,255,0.04);
+    }
+
+    /* Intel Handwriting: provide a local font file at /fonts/IntelHandwriting.woff2
+       If you don't have the file, the browser will fall back to system fonts. */
+    @font-face {
+      font-family: "Intel Handwriting";
+      src: url("fonts/IntelHandwriting.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    html,body { height:100%; }
+
+    body{
+      font-family: "Intel Handwriting", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(180deg,var(--page-bg), #03040a 140%);
+      color: var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* Header */
+    header{
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent);
+      color: var(--text);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      backdrop-filter: blur(6px);
+    }
+
+    /* Buttons */
+    .btn-custom{
+      background: linear-gradient(90deg,var(--brand), #2b9f99);
+      color: #021017;
+      font-weight: 700;
+      border-radius: 0.75rem;
+      padding: 0.6rem 1.25rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: transform .12s ease, box-shadow .12s ease, filter .12s;
+      box-shadow: 0 8px 30px rgba(58,175,169,0.12);
+    }
+    .btn-custom:hover{ transform: translateY(-3px); filter:brightness(1.04); }
+
+    /* Card / Feature */
+    .feature-box{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      color: var(--text);
+      padding: 1.25rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(255,255,255,0.04);
+      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .feature-box:hover{ transform: translateY(-6px); box-shadow: 0 18px 60px rgba(2,6,23,0.7); }
+
+    /* Carousel / Slider */
+    .hero-slider { position:relative; width:100%; max-width:1200px; margin:0 auto; overflow:visible; }
+    .hero-slides { position:relative; height:76vh; display:flex; }
+    .hero-slide { min-width:100%; height:100%; background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center; }
+    .hero-overlay { background: linear-gradient(180deg, rgba(2,6,23,0.55), rgba(2,6,23,0.65)); padding:2.5rem; border-radius:1rem; max-width:900px; box-shadow:0 20px 60px rgba(2,6,23,0.7); }
+
+    .slider-nav { position:absolute; left:12px; right:12px; top:50%; transform:translateY(-50%); display:flex; justify-content:space-between; pointer-events:none; }
+    .slider-btn { pointer-events:auto; background:rgba(0,0,0,0.45); color:var(--text); border-radius:999px; width:44px; height:44px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,0.04); }
+    .slider-dots { position:absolute; left:50%; transform:translateX(-50%); bottom:18px; display:flex; gap:8px; }
+
+    .dot { width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,0.12); cursor:pointer; border:1px solid rgba(255,255,255,0.03); }
+    .dot.active { background:var(--brand); box-shadow:0 8px 20px rgba(58,175,169,0.12); }
+
+    /* Features carousel (horizontal scroll, snap) */
+    .features-carousel { display:flex; gap:1rem; overflow-x:auto; padding:1rem 0; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; }
+    .features-item { flex:0 0 320px; scroll-snap-align:center; }
+    .features-controls { display:flex; gap:.5rem; align-items:center; justify-content:center; margin-top:1rem; }
+
+    /* FAQ */
+    .faq-answer{ display:none; color:var(--muted); }
+    .faq-item.active .faq-answer{ display:block; }
+    .faq-question{ color:var(--text); }
+
+    /* Scroll top */
+    #scroll-top{ background:var(--brand); color:#021017; }
+
+    /* Helpers */
+    .chev{ color:var(--muted); transition: transform .2s; }
+    .chev.rotate-180{ transform: rotate(180deg); }
+
+    /* Small responsive tweaks */
+    @media (max-width: 768px){
+      .hero-overlay { padding:1.25rem; margin:0 12px; }
+      .hero-slides { height:60vh; }
+    }
   </style>
 </head>
-<body>
-  <header class="fixed top-0 left-0 w-full bg-[#0f0f0f] py-3 px-4 flex items-center justify-between z-50">
+<body class="bg-[var(--page-bg)] text-[var(--text)]">
+
+  <!-- Header -->
+  <header class="fixed top-0 left-0 w-full py-4 px-6 flex items-center justify-between z-50">
     <div class="flex items-center gap-3">
-      <img src="logo.png" alt="Nabogaming Logo" class="h-10 rounded-full">
-      <span class="text-white font-bold">Nabogaming</span>
+      <img src="logo.png" alt="Logo" class="h-10 rounded-full border border-white/6">
+      <span class="text-xl font-bold">NaboGaming</span>
     </div>
-    <nav class="hidden md:flex items-center">
-      <a href="#hero" class="text-white font-semibold ml-4 hover:text-[var(--brand)]">Home</a>
-      <a href="dashboard.html" class="text-white font-semibold ml-4 hover:text-[var(--brand)]">Sign-in</a>
+    <nav class="hidden md:flex gap-6">
+      <a href="#" class="hover:text-[var(--brand)] font-medium">Nyumbani</a>
+      <a href="dashboard.html" class="hover:text-[var(--brand)] font-medium">Ingia</a>
     </nav>
   </header>
 
-  <section class="hero pt-24 px-6 text-center" id="hero">
-    <h1 class="text-2xl md:text-3xl font-bold mb-3">Karibu Nabogaming Version 2.7</h1>
-    <p class="mb-6 text-gray-300">Ungana na wachezaji wa simu wa Tanzania, shindana na ushinde zawadi kibao.</p>
-    <button class="btn-custom" id="google-sign-in">
-      Tumia Akaunti Ya Google <i class="ri-google-line ml-2"></i>
-    </button>
-  </section>
+  <main class="pt-20">
 
-  
-  <!-- Features Section -->
-  <section id="features" class="py-12 px-6 text-center bg-[#0f0f0f]">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-      <div class="feature p-6 rounded-lg feature-box text-left">
-        <i class="ri-speed-line text-3xl text-[var(--brand)] mb-4"></i>
-        <h3 class="text-white text-xl font-semibold mb-2">Cheza Zaidi</h3>
-        <p class="text-gray-300">Shindana Na Wachezaji Wa Kitaifa Na Kimataifa Katika Michezo Mbalimbali. Kila Mechi Ina Zawadi Za Kipekee Kwa Washindi.</p>
+    <!-- Hero Slider -->
+    <section id="hero" class="py-8">
+      <div class="hero-slider">
+        <div class="hero-slides" id="heroSlides">
+          <div class="hero-slide" style="background-image:url('bg1.jpg');">
+            <div class="hero-overlay text-center">
+              <h1 class="text-3xl md:text-5xl font-bold mb-3">Karibu NaboGaming 2.7</h1>
+              <p class="text-gray-300 mb-6">Shindana, cheza, na ushinde zawadi. Jiunge na wachezaji wa Tanzania leo.</p>
+              <div class="flex items-center justify-center gap-3">
+                <button class="btn-custom" id="google-sign-in-1">Tumia Akaunti Ya Google <i class="ri-google-line ml-2"></i></button>
+                <a href="#features" class="btn-custom bg-transparent border border-white/6 text-[var(--text)] hover:brightness-95">Vigezo</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-slide" style="background-image:url('bg2.jpg');">
+            <div class="hero-overlay text-center">
+              <h1 class="text-3xl md:text-5xl font-bold mb-3">Mashindano ya Kila Wiki</h1>
+              <p class="text-gray-300 mb-6">Shinda nafasi za juu na unywe sifa za ushindi katika leaderboard.</p>
+              <div class="flex items-center justify-center gap-3">
+                <a href="dashboard.html" class="btn-custom">Tazama Mechi</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-slide" style="background-image:url('bg3.jpg');">
+            <div class="hero-overlay text-center">
+              <h1 class="text-3xl md:text-5xl font-bold mb-3">Zawadi & Bonasi</h1>
+              <p class="text-gray-300 mb-6">Pata bonasi za usajili na zawadi za wakati wa promosheni.</p>
+              <div class="flex items-center justify-center gap-3">
+                <a href="#faq" class="btn-custom">Jifunze Zaidi</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slider-nav" aria-hidden="true">
+          <button class="slider-btn" id="prevBtn"><i class="ri-arrow-left-s-line text-2xl"></i></button>
+          <button class="slider-btn" id="nextBtn"><i class="ri-arrow-right-s-line text-2xl"></i></button>
+        </div>
+
+        <div class="slider-dots" id="heroDots" aria-hidden="true"></div>
       </div>
-      <div class="feature p-6 rounded-lg feature-box text-left">
-        <i class="ri-device-line text-3xl text-[var(--brand)] mb-4"></i>
-        <h3 class="text-white text-xl font-semibold mb-2">Responsive</h3>
-        <p class="text-gray-300">Furahia Uzoefu Bora Katika Vifaa Vyote, Popote Ulipo. Hakuna Hali Ya Kuchelewa!</p>
+    </section>
+
+    <!-- Features (horizontal slider with snap) -->
+    <section id="features" class="py-12 px-6">
+      <h2 class="text-2xl font-bold text-center mb-6">Vipengele Muhimu</h2>
+
+      <div class="features-carousel" id="featuresCarousel" role="list">
+        <div class="features-item feature-box" role="listitem">
+          <i class="ri-gamepad-line text-4xl" style="color:var(--brand); margin-bottom:0.75rem"></i>
+          <h3 class="text-xl font-semibold mb-2">Cheza Zaidi</h3>
+          <p class="text-[var(--muted)]">Shindana na wachezaji wa kitaifa na kimataifa. Kila mechi ina zawadi za kipekee.</p>
+        </div>
+
+        <div class="features-item feature-box" role="listitem">
+          <i class="ri-smartphone-line text-4xl" style="color:var(--brand); margin-bottom:0.75rem"></i>
+          <h3 class="text-xl font-semibold mb-2">Responsive</h3>
+          <p class="text-[var(--muted)]">Uzoefu bora kwenye simu na desktop. Design iliyo optimized kwa mchezo.</p>
+        </div>
+
+        <div class="features-item feature-box" role="listitem">
+          <i class="ri-shield-check-line text-4xl" style="color:var(--brand); margin-bottom:0.75rem"></i>
+          <h3 class="text-xl font-semibold mb-2">Salama</h3>
+          <p class="text-[var(--muted)]">Teknolojia ya kisasa ya usalama inalinda taarifa zako.</p>
+        </div>
+
+        <div class="features-item feature-box" role="listitem">
+          <i class="ri-trophy-line text-4xl" style="color:var(--brand); margin-bottom:0.75rem"></i>
+          <h3 class="text-xl font-semibold mb-2">Mikakati ya Ushindi</h3>
+          <p class="text-[var(--muted)]">Sawa kwa wachezaji wa viwango vyote na leaderboard za ushindani.</p>
+        </div>
       </div>
-      <div class="feature p-6 rounded-lg feature-box text-left">
-        <i class="ri-lock-line text-3xl text-[var(--brand)] mb-4"></i>
-        <h3 class="text-white text-xl font-semibold mb-2">Salama</h3>
-        <p class="text-gray-300">Madaraja Ya Usalama Ya Kisasa Yaliyojengwa Ili Kulinda Taarifa Zako Na Kukupeleka Kwa Usalama Katika Ulimwengu Wa Michezo.</p>
+
+      <div class="features-controls">
+        <button class="slider-btn" id="featPrev"><i class="ri-arrow-left-s-line text-xl"></i></button>
+        <button class="slider-btn" id="featNext"><i class="ri-arrow-right-s-line text-xl"></i></button>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- FAQ Section -->
-  <section class="faq" id="faq">
-    <h2>Maswali Yanayoulizwa Mara Kwa Mara</h2>
-    <div class="faq-item">
-      <div class="faq-question">NaboGaming ni nini?</div>
-      <div class="faq-answer">NaboGaming ni jukwaa la michezo ya simu la Tanzania, ambapo wachezaji wanaweza kushindana na wengine katika michezo maarufu na kushinda zawadi.</div>
-    </div>
+    <!-- FAQ -->
+    <section id="faq" class="py-12 px-6">
+      <h2 class="text-2xl font-bold text-center mb-8">Maswali Yanayoulizwa Mara Kwa Mara</h2>
+      <div class="max-w-3xl mx-auto space-y-4">
+        <div class="faq-item border border-white/6 rounded-lg p-4 cursor-pointer">
+          <div class="faq-question font-semibold flex items-center justify-between">
+            <span>NaboGaming ni nini?</span>
+            <i class="ri-arrow-down-s-line chev text-[22px]"></i>
+          </div>
+          <div class="faq-answer text-[var(--muted)] mt-2">Jukwaa la michezo ya simu la Tanzania, ambapo wachezaji hushindana na kushinda zawadi.</div>
+        </div>
 
-    <div class="faq-item">
-      <div class="faq-question">Jinsi ya kujiandikisha kwa NaboGaming?</div>
-      <div class="faq-answer">Bonyeza "Tumia Akaunti ya Google" ili kujiandikisha kwa kutumia akaunti yako ya Google.</div>
-    </div>
+        <div class="faq-item border border-white/6 rounded-lg p-4 cursor-pointer">
+          <div class="faq-question font-semibold flex items-center justify-between">
+            <span>Jinsi ya kujiandikisha?</span>
+            <i class="ri-arrow-down-s-line chev text-[22px]"></i>
+          </div>
+          <div class="faq-answer text-[var(--muted)] mt-2">Bonyeza "Tumia Akaunti ya Google" ili kujiandikisha.</div>
+        </div>
 
-    <div class="faq-item">
-      <div class="faq-question">Je, NaboGaming inatumiaje salama data yangu?</div>
-      <div class="faq-answer">Inatumia teknolojia ya kisasa ya usalama ili kulinda taarifa zako.</div>
-    </div>
+        <div class="faq-item border border-white/6 rounded-lg p-4 cursor-pointer">
+          <div class="faq-question font-semibold flex items-center justify-between">
+            <span>Usalama wa data?</span>
+            <i class="ri-arrow-down-s-line chev text-[22px]"></i>
+          </div>
+          <div class="faq-answer text-[var(--muted)] mt-2">Tunatumia teknolojia ya kisasa kulinda taarifa zako.</div>
+        </div>
+      </div>
+    </section>
 
-    <div class="faq-item">
-      <div class="faq-question">Jinsi ya kushinda zawadi?</div>
-      <div class="faq-answer">Zawadi hutolewa kwa washindi wa nafasi za juu kwenye mashindano.</div>
-    </div>
+  </main>
 
-    <div class="faq-item">
-      <div class="faq-question">NaboGaming inapatikana wapi?</div>
-      <div class="faq-answer">Inapatikana kwa wachezaji wote nchini Tanzania kupitia tovuti nabogaming.com</div>
-    </div>
-  </section>
+  <!-- Scroll to Top -->
+  <button id="scroll-top" class="fixed bottom-6 right-6 p-3 rounded-full shadow-lg hidden" aria-label="Scroll to top">
+    <i class="ri-arrow-up-line text-white text-xl"></i>
+  </button>
 
-  <!-- Scroll to Top Button -->
-  <button class="scroll-top" id="scroll-top"><i class="ri-arrow-up-line text-white"></i></button>
-
-  <!-- Scripts -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <!-- Firebase & Scripts -->
   <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-  import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAPfNRooogLEGIZxoUOlQ2i7lJT8r_GktI",
       authDomain: "tested-38c18.firebaseapp.com",
       projectId: "tested-38c18",
-      storageBucket: "tested-38c18.firebasestorage.app",
+      storageBucket: "tested-38c18.appspot.com",
       messagingSenderId: "853330692200",
       appId: "1:853330692200:web:d9d6b0164f761c3b4313dd"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-  const provider = new GoogleAuthProvider();
-  // Prompt user to select account for better UX when multiple accounts exist
-  provider.setCustomParameters({ prompt: 'select_account' });
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        window.location.href = "dashboard.html";
+        try { window.location.href = "dashboard.html"; } catch(e) { console.warn(e); }
       }
     });
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const googleBtn = document.getElementById("google-sign-in");
-      if (googleBtn) {
-        googleBtn.addEventListener("click", async () => {
-          try {
-            if (!auth) throw new Error('Auth not initialized');
-            const result = await signInWithPopup(auth, provider);
-            console.log("Sign-in successful:", result.user);
-            window.location.href = "dashboard.html";
-          } catch (error) {
-            console.error("Sign-in failed:", error);
-            alert("Sign-in failed: " + (error?.message || error));
+    const signBtns = document.querySelectorAll('#google-sign-in, #google-sign-in-1');
+    signBtns.forEach(btn => btn?.addEventListener('click', async () => {
+      try {
+        const result = await signInWithPopup(auth, provider);
+        console.log("Signed in:", result.user);
+        window.location.href = "dashboard.html";
+      } catch (error) {
+        alert("Sign-in failed: " + (error?.message || error));
+      }
+    }));
+  </script>
+
+  <script>
+    // HERO slider logic (simple, accessible)
+    (function(){
+      const slidesEl = document.getElementById('heroSlides');
+      const slides = Array.from(slidesEl.children);
+      const dotsEl = document.getElementById('heroDots');
+      let idx = 0;
+      let autoplay = true;
+      let timer = null;
+      const show = (i) => {
+        slidesEl.style.transform = `translateX(-${i*100}%)`;
+        Array.from(dotsEl.children).forEach((d,di)=> d.classList.toggle('active', di===i));
+        idx = i;
+      };
+      // create dots
+      slides.forEach((s, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'dot';
+        dot.setAttribute('aria-label', 'Go to slide ' + (i+1));
+        dot.addEventListener('click', () => { show(i); resetTimer(); });
+        dotsEl.appendChild(dot);
+      });
+      show(0);
+      document.getElementById('nextBtn').addEventListener('click', () => { show((idx+1)%slides.length); resetTimer(); });
+      document.getElementById('prevBtn').addEventListener('click', () => { show((idx-1+slides.length)%slides.length); resetTimer(); });
+
+      const startTimer = () => {
+        timer = setInterval(() => show((idx+1)%slides.length), 6000);
+      };
+      const resetTimer = () => {
+        clearInterval(timer);
+        if (autoplay) startTimer();
+      };
+      startTimer();
+
+      // Pause on hover
+      slidesEl.addEventListener('mouseenter', () => clearInterval(timer));
+      slidesEl.addEventListener('mouseleave', () => { if (autoplay) startTimer(); });
+    })();
+
+    // FEATURES carousel controls
+    (function(){
+      const carousel = document.getElementById('featuresCarousel');
+      const next = document.getElementById('featNext');
+      const prev = document.getElementById('featPrev');
+      const scrollByAmount = 340;
+
+      next?.addEventListener('click', () => {
+        carousel.scrollBy({ left: scrollByAmount, behavior: 'smooth' });
+      });
+      prev?.addEventListener('click', () => {
+        carousel.scrollBy({ left: -scrollByAmount, behavior: 'smooth' });
+      });
+    })();
+
+    // FAQ accordion: single-open, accessible
+    (function () {
+      const items = document.querySelectorAll(".faq-item");
+      if (!items || items.length === 0) return;
+
+      items.forEach(item => {
+        const chev = item.querySelector(".chev");
+        item.addEventListener("click", () => {
+          items.forEach(i => {
+            if (i !== item) {
+              i.classList.remove("active");
+              const c = i.querySelector(".chev");
+              if (c) c.classList.remove("rotate-180");
+            }
+          });
+          item.classList.toggle("active");
+          if (chev) chev.classList.toggle("rotate-180");
+        });
+
+        item.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            item.click();
           }
         });
-      }
-    });
-  </script>
-  <script>
-    $(document).ready(function(){
-      $('.slider').slick({
-        infinite: true,
-        slidesToShow: 2,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 3000,
-        arrows: true,
-        dots: true,
-        responsive: [
-          {
-            breakpoint: 768,
-            settings: {
-              slidesToShow: 1,
-              arrows: false
-            }
-          }
-        ]
+        item.tabIndex = 0;
       });
+    })();
 
-      // Scroll to Top button visibility
-      $(window).scroll(function() {
-        if ($(this).scrollTop() > 100) {
-          $('#scroll-top').addClass('show');
-        } else {
-          $('#scroll-top').removeClass('show');
-        }
+    // Scroll to top
+    (function(){
+      const scrollBtn = document.getElementById("scroll-top");
+      window.addEventListener("scroll", () => {
+        if (!scrollBtn) return;
+        scrollBtn.style.display = window.scrollY > 200 ? "block" : "none";
       });
-
-      // Scroll to Top on click
-      $('#scroll-top').click(function() {
-        $('html, body').animate({ scrollTop: 0 }, '300');
-        return false;
-      });
-    });
+      scrollBtn?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+    })();
   </script>
 </body>
 </html>
