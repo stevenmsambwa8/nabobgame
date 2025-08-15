@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nabogaming 2.5</title>
+  <link rel="icon" href="logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+  <link rel="stylesheet" href="remixicon.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: auto;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #121212;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+    }
+    header img {
+      height: 40px;
+      border-radius: 50%;
+    }
+    .nav a {
+      color: #fff;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .nav a:hover {
+      color: #3aafa9;
+    }
+    .hero {
+      padding: 6rem 2rem 2rem;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      margin-bottom: 1.5rem;
+    }
+    .btn {
+      background: white;
+      color: black;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+    }
+    .btn i {
+      margin-left: 0.5rem;
+    }
+    .slider-section {
+      padding: 2rem;
+    }
+    .slider {
+      display: flex;
+      overflow-x: auto;
+      gap: 1rem;
+    }
+    .slide {
+      min-width: 200px;
+      background: #1e1e1e;
+      border-radius: 10px;
+      padding: 1rem;
+    }
+    .slide img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 0.5rem;
+    }
+    .slide p {
+      font-size: 0.95rem;
+    }
+
+    /* Features Section */
+    .features {
+      padding: 3rem 1.5rem;
+      background: #1e1e1e;
+      text-align: center;
+    }
+    .feature {
+      display: inline-block;
+      width: 30%;
+      background: #333;
+      margin: 1rem;
+      padding: 1.5rem;
+      border-radius: 10px;
+    }
+    .feature i {
+      font-size: 2.5rem;
+      color: #3aafa9;
+      margin-bottom: 1rem;
+    }
+    .feature h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+    .feature p {
+      font-size: 1rem;
+      color: #bbb;
+    }
+
+    /* FAQ Section */
+    .faq {
+      background: #121212;
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+    .faq h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .faq-item {
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+    .faq-question {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+    .faq-answer {
+      font-size: 1rem;
+      color: #bbb;
+    }
+
+    /* Scroll to Top Button */
+    .scroll-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #3aafa9;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      padding: 1rem;
+      cursor: pointer;
+      display: none;
+    }
+    .scroll-top i {
+      font-size: 1.5rem;
+    }
+    .scroll-top.show {
+      display: inline-block;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      /* Adjust hero section text */
+      .hero h1 {
+        font-size: 1.5rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+
+      /* Adjust features section */
+      .feature {
+        width: 100%;
+        margin: 0.5rem 0;
+      }
+
+      /* Adjust slider */
+      .slider {
+        display: block;
+      }
+      .slide {
+        min-width: 100%;
+      }
+
+      /* Adjust FAQ section */
+      .faq h2 {
+        font-size: 1.5rem;
+      }
+      .faq-question {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      /* Adjust the header and navigation */
+      header {
+        padding: 1rem;
+      }
+      .nav a {
+        font-size: 0.9rem;
+        margin-left: 0.5rem;
+      }
+
+      /* Adjust hero text */
+      .hero h1 {
+        font-size: 1.2rem;
+      }
+      .hero p {
+        font-size: 0.9rem;
+      }
+
+      /* Adjust button size */
+      .btn {
+        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
+      }
+
+      /* Adjust the FAQ section */
+      .faq h2 {
+        font-size: 1.3rem;
+      }
+      .faq-question {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Nabogaming Logo">
+    <nav class="nav">
+      <a href="#hero">Home</a>
+      <a href="dashboard.html">Sign-in</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="hero">
+    <h1>Karibu Nabogaming Version 2.7</h1>
+    <p>Ungana na wachezaji wa simu wa Tanzania, shindana na ushinde zawadi kibao.</p>
+    <button class="btn" id="google-sign-in">
+      Tumia Akaunti Ya Google <i class="ri-google-line"></i>
+    </button>
+  </section>
+
+  
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="feature">
+      <i class="ri-speed-line"></i>
+      <h3>Cheza Zaidi</h3>
+      <p>Shindana Na Wachezaji Wa Kitaifa Na Kimataifa Katika Michezo Mbalimbali. Kila Mechi Ina Zawadi Za Kipekee Kwa Washindi.</p>
+    </div>
+    <div class="feature">
+      <i class="ri-device-line"></i>
+      <h3>Responsive</h3>
+      <p>Furahia Uzoefu Bora Katika Vifaa Vyote, Popote Ulipo. Hakuna Hali Ya Kuchelewa!</p>
+    </div>
+    <div class="feature">
+      <i class="ri-lock-line"></i>
+      <h3>Salama</h3>
+      <p>Madaraja Ya Usalama Ya Kisasa Yaliyojengwa Ili Kulinda Taarifa Zako Na Kukupeleka Kwa Usalama Katika Ulimwengu Wa Michezo.</p>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq" id="faq">
+    <h2>Maswali Yanayoulizwa Mara Kwa Mara</h2>
+    <div class="faq-item">
+      <div class="faq-question">NaboGaming ni nini?</div>
+      <div class="faq-answer">NaboGaming ni jukwaa la michezo ya simu la Tanzania, ambapo wachezaji wanaweza kushindana na wengine katika michezo maarufu na kushinda zawadi.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Jinsi ya kujiandikisha kwa NaboGaming?</div>
+      <div class="faq-answer">Bonyeza "Tumia Akaunti ya Google" ili kujiandikisha kwa kutumia akaunti yako ya Google.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Je, NaboGaming inatumiaje salama data yangu?</div>
+      <div class="faq-answer">Inatumia teknolojia ya kisasa ya usalama ili kulinda taarifa zako.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">Jinsi ya kushinda zawadi?</div>
+      <div class="faq-answer">Zawadi hutolewa kwa washindi wa nafasi za juu kwenye mashindano.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">NaboGaming inapatikana wapi?</div>
+      <div class="faq-answer">Inapatikana kwa wachezaji wote nchini Tanzania kupitia tovuti nabogaming.com</div>
+    </div>
+  </section>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-top" id="scroll-top"><i class="ri-arrow-up-line"></i></button>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC_VKdV-KsIzUiOb7jFLsYXdTsuGkLiS-Q",
+      authDomain: "register-71bde.firebaseapp.com",
+      projectId: "register-71bde",
+      storageBucket: "register-71bde.appspot.com",
+      messagingSenderId: "412548441298",
+      appId: "1:412548441298:web:e0fb2b6c5fbd4af7d0b90b",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        window.location.href = "dashboard.html";
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const googleBtn = document.getElementById("google-sign-in");
+      if (googleBtn) {
+        googleBtn.addEventListener("click", async () => {
+          try {
+            const result = await signInWithPopup(auth, provider);
+            console.log("Sign-in successful:", result.user);
+            window.location.href = "dashboard.html";
+          } catch (error) {
+            console.error("Sign-in failed:", error);
+            alert("Sign-in failed: " + error.message);
+          }
+        });
+      }
+    });
+  </script>
+  <script>
+    $(document).ready(function(){
+      $('.slider').slick({
+        infinite: true,
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        arrows: true,
+        dots: true,
+        responsive: [
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 1,
+              arrows: false
+            }
+          }
+        ]
+      });
+
+      // Scroll to Top button visibility
+      $(window).scroll(function() {
+        if ($(this).scrollTop() > 100) {
+          $('#scroll-top').addClass('show');
+        } else {
+          $('#scroll-top').removeClass('show');
+        }
+      });
+
+      // Scroll to Top on click
+      $('#scroll-top').click(function() {
+        $('html, body').animate({ scrollTop: 0 }, '300');
+        return false;
+      });
+    });
+  </script>
+</body>
+</html>
