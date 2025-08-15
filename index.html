@@ -8,266 +8,56 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
   <link rel="stylesheet" href="remixicon.min.css">
+  <!-- Tailwind CSS (CDN for quick usage) -->
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      background-color: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      max-width: 700px;
-      margin: auto;
-    }
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: #121212;
-      padding: 0.75rem 1.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      z-index: 1000;
-    }
-    header img {
-      height: 40px;
-      border-radius: 50%;
-    }
-    .nav a {
-      color: #fff;
-      margin-left: 1rem;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .nav a:hover {
-      color: #3aafa9;
-    }
-    .hero {
-      padding: 6rem 2rem 2rem;
-      text-align: center;
-    }
-    .hero h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-    .hero p {
-      margin-bottom: 1.5rem;
-    }
-    .btn {
-      background: white;
-      color: black;
-      padding: 0.8rem 1.5rem;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-    }
-    .btn i {
-      margin-left: 0.5rem;
-    }
-    .slider-section {
-      padding: 2rem;
-    }
-    .slider {
-      display: flex;
-      overflow-x: auto;
-      gap: 1rem;
-    }
-    .slide {
-      min-width: 200px;
-      background: #1e1e1e;
-      border-radius: 10px;
-      padding: 1rem;
-    }
-    .slide img {
-      width: 100%;
-      border-radius: 10px;
-      margin-bottom: 0.5rem;
-    }
-    .slide p {
-      font-size: 0.95rem;
-    }
-
-    /* Features Section */
-    .features {
-      padding: 3rem 1.5rem;
-      background: #1e1e1e;
-      text-align: center;
-    }
-    .feature {
-      display: inline-block;
-      width: 30%;
-      background: #333;
-      margin: 1rem;
-      padding: 1.5rem;
-      border-radius: 10px;
-    }
-    .feature i {
-      font-size: 2.5rem;
-      color: #3aafa9;
-      margin-bottom: 1rem;
-    }
-    .feature h3 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: #fff;
-    }
-    .feature p {
-      font-size: 1rem;
-      color: #bbb;
-    }
-
-    /* FAQ Section */
-    .faq {
-      background: #121212;
-      padding: 3rem 1.5rem;
-      text-align: center;
-    }
-    .faq h2 {
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-    }
-    .faq-item {
-      margin-bottom: 1rem;
-      text-align: left;
-    }
-    .faq-question {
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-      font-size: 1.2rem;
-    }
-    .faq-answer {
-      font-size: 1rem;
-      color: #bbb;
-    }
-
-    /* Scroll to Top Button */
-    .scroll-top {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #3aafa9;
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      padding: 1rem;
-      cursor: pointer;
-      display: none;
-    }
-    .scroll-top i {
-      font-size: 1.5rem;
-    }
-    .scroll-top.show {
-      display: inline-block;
-    }
-
-    /* Responsive Styles */
-    @media (max-width: 768px) {
-      /* Adjust hero section text */
-      .hero h1 {
-        font-size: 1.5rem;
-      }
-      .hero p {
-        font-size: 1rem;
-      }
-
-      /* Adjust features section */
-      .feature {
-        width: 100%;
-        margin: 0.5rem 0;
-      }
-
-      /* Adjust slider */
-      .slider {
-        display: block;
-      }
-      .slide {
-        min-width: 100%;
-      }
-
-      /* Adjust FAQ section */
-      .faq h2 {
-        font-size: 1.5rem;
-      }
-      .faq-question {
-        font-size: 1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      /* Adjust the header and navigation */
-      header {
-        padding: 1rem;
-      }
-      .nav a {
-        font-size: 0.9rem;
-        margin-left: 0.5rem;
-      }
-
-      /* Adjust hero text */
-      .hero h1 {
-        font-size: 1.2rem;
-      }
-      .hero p {
-        font-size: 0.9rem;
-      }
-
-      /* Adjust button size */
-      .btn {
-        font-size: 0.9rem;
-        padding: 0.6rem 1rem;
-      }
-
-      /* Adjust the FAQ section */
-      .faq h2 {
-        font-size: 1.3rem;
-      }
-      .faq-question {
-        font-size: 1rem;
-      }
-    }
+    /* Minimal custom styles preserved; prefer Tailwind utility classes for layout */
+    :root { --brand: #3aafa9; }
+  .btn-custom { background: #fff; color:#000; font-weight:600; border-radius: 0.75rem; display:inline-flex; align-items:center; padding: 0.75rem 1.5rem; }
+    .feature-box { background: #1f1f1f; }
+    /* keep a small max width to match previous layout */
+    body { max-width: 700px; margin: 0 auto; }
   </style>
 </head>
 <body>
-  <header>
-    <img src="logo.png" alt="Nabogaming Logo">
-    <nav class="nav">
-      <a href="#hero">Home</a>
-      <a href="dashboard.html">Sign-in</a>
+  <header class="fixed top-0 left-0 w-full bg-[#0f0f0f] py-3 px-4 flex items-center justify-between z-50">
+    <div class="flex items-center gap-3">
+      <img src="logo.png" alt="Nabogaming Logo" class="h-10 rounded-full">
+      <span class="text-white font-bold">Nabogaming</span>
+    </div>
+    <nav class="hidden md:flex items-center">
+      <a href="#hero" class="text-white font-semibold ml-4 hover:text-[var(--brand)]">Home</a>
+      <a href="dashboard.html" class="text-white font-semibold ml-4 hover:text-[var(--brand)]">Sign-in</a>
     </nav>
   </header>
 
-  <section class="hero" id="hero">
-    <h1>Karibu Nabogaming Version 2.7</h1>
-    <p>Ungana na wachezaji wa simu wa Tanzania, shindana na ushinde zawadi kibao.</p>
-    <button class="btn" id="google-sign-in">
-      Tumia Akaunti Ya Google <i class="ri-google-line"></i>
+  <section class="hero pt-24 px-6 text-center" id="hero">
+    <h1 class="text-2xl md:text-3xl font-bold mb-3">Karibu Nabogaming Version 2.7</h1>
+    <p class="mb-6 text-gray-300">Ungana na wachezaji wa simu wa Tanzania, shindana na ushinde zawadi kibao.</p>
+    <button class="btn-custom" id="google-sign-in">
+      Tumia Akaunti Ya Google <i class="ri-google-line ml-2"></i>
     </button>
   </section>
 
   
   <!-- Features Section -->
-  <section class="features" id="features">
-    <div class="feature">
-      <i class="ri-speed-line"></i>
-      <h3>Cheza Zaidi</h3>
-      <p>Shindana Na Wachezaji Wa Kitaifa Na Kimataifa Katika Michezo Mbalimbali. Kila Mechi Ina Zawadi Za Kipekee Kwa Washindi.</p>
-    </div>
-    <div class="feature">
-      <i class="ri-device-line"></i>
-      <h3>Responsive</h3>
-      <p>Furahia Uzoefu Bora Katika Vifaa Vyote, Popote Ulipo. Hakuna Hali Ya Kuchelewa!</p>
-    </div>
-    <div class="feature">
-      <i class="ri-lock-line"></i>
-      <h3>Salama</h3>
-      <p>Madaraja Ya Usalama Ya Kisasa Yaliyojengwa Ili Kulinda Taarifa Zako Na Kukupeleka Kwa Usalama Katika Ulimwengu Wa Michezo.</p>
+  <section id="features" class="py-12 px-6 text-center bg-[#0f0f0f]">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+      <div class="feature p-6 rounded-lg feature-box text-left">
+        <i class="ri-speed-line text-3xl text-[var(--brand)] mb-4"></i>
+        <h3 class="text-white text-xl font-semibold mb-2">Cheza Zaidi</h3>
+        <p class="text-gray-300">Shindana Na Wachezaji Wa Kitaifa Na Kimataifa Katika Michezo Mbalimbali. Kila Mechi Ina Zawadi Za Kipekee Kwa Washindi.</p>
+      </div>
+      <div class="feature p-6 rounded-lg feature-box text-left">
+        <i class="ri-device-line text-3xl text-[var(--brand)] mb-4"></i>
+        <h3 class="text-white text-xl font-semibold mb-2">Responsive</h3>
+        <p class="text-gray-300">Furahia Uzoefu Bora Katika Vifaa Vyote, Popote Ulipo. Hakuna Hali Ya Kuchelewa!</p>
+      </div>
+      <div class="feature p-6 rounded-lg feature-box text-left">
+        <i class="ri-lock-line text-3xl text-[var(--brand)] mb-4"></i>
+        <h3 class="text-white text-xl font-semibold mb-2">Salama</h3>
+        <p class="text-gray-300">Madaraja Ya Usalama Ya Kisasa Yaliyojengwa Ili Kulinda Taarifa Zako Na Kukupeleka Kwa Usalama Katika Ulimwengu Wa Michezo.</p>
+      </div>
     </div>
   </section>
 
@@ -301,27 +91,29 @@
   </section>
 
   <!-- Scroll to Top Button -->
-  <button class="scroll-top" id="scroll-top"><i class="ri-arrow-up-line"></i></button>
+  <button class="scroll-top" id="scroll-top"><i class="ri-arrow-up-line text-white"></i></button>
 
   <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
     const firebaseConfig = {
-      apiKey: "AIzaSyC_VKdV-KsIzUiOb7jFLsYXdTsuGkLiS-Q",
-      authDomain: "register-71bde.firebaseapp.com",
-      projectId: "register-71bde",
-      storageBucket: "register-71bde.appspot.com",
-      messagingSenderId: "412548441298",
-      appId: "1:412548441298:web:e0fb2b6c5fbd4af7d0b90b",
+      apiKey: "AIzaSyAPfNRooogLEGIZxoUOlQ2i7lJT8r_GktI",
+      authDomain: "tested-38c18.firebaseapp.com",
+      projectId: "tested-38c18",
+      storageBucket: "tested-38c18.firebasestorage.app",
+      messagingSenderId: "853330692200",
+      appId: "1:853330692200:web:d9d6b0164f761c3b4313dd"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
+  const provider = new GoogleAuthProvider();
+  // Prompt user to select account for better UX when multiple accounts exist
+  provider.setCustomParameters({ prompt: 'select_account' });
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -334,12 +126,13 @@
       if (googleBtn) {
         googleBtn.addEventListener("click", async () => {
           try {
+            if (!auth) throw new Error('Auth not initialized');
             const result = await signInWithPopup(auth, provider);
             console.log("Sign-in successful:", result.user);
             window.location.href = "dashboard.html";
           } catch (error) {
             console.error("Sign-in failed:", error);
-            alert("Sign-in failed: " + error.message);
+            alert("Sign-in failed: " + (error?.message || error));
           }
         });
       }
