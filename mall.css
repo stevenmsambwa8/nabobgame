@@ -1,0 +1,43 @@
+
+                .grid-121 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+        .post-card {
+             height: 133px;
+        }
+        .post-card-2 {
+             height: 133px;
+        }
+        .post-media img {
+            margin-bottom: 10px;
+        }
+
+        @media(max-width:900px) {
+            .grid-121 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width:520px) {
+            .grid-121 {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;gap: 10px;
+            }
+            .post-card {
+                height: 133px;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+       }
